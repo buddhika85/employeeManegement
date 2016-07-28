@@ -18,6 +18,60 @@ namespace employeeManagement.Controllers
             try
             {
                 employeeVms = new RestSharpServiceConsumer<EmployeeViewModel>("api/employee/getAllEmployees").GetAll();
+
+                // search form elements
+                ViewBag.DepartmentSelectListItems = new[] {
+                    new SelectListItem { Value = "1", Text = "Engineering" },
+                    new SelectListItem { Value = "2", Text = "Marketting" },
+                    new SelectListItem { Value = "3", Text = "Finance" },
+                    new SelectListItem { Value = "4", Text = "Business" }
+                };
+                ViewBag.PermenentSelectListItems = new[] {
+                    new SelectListItem { Value = "Y" , Text = "Yes"},
+                    new SelectListItem { Value = "N" , Text = "No"}
+                };
+
+                ViewBag.SearchResultOrAll = string.Format("All the employees");
+            }
+            catch (Exception ex)
+            {
+                // logging
+                //throw;
+            }
+
+            return View(employeeVms);
+        }
+
+        [HttpPost]
+        public ActionResult Index(int employeeId, string firstName, string lastName, decimal salary, int departmentId, string PermanentChar)
+        {
+            IList<EmployeeViewModel> employeeVms = null;
+            try
+            {
+                EmployeeViewModel employeeVm = new EmployeeViewModel()
+                {
+                    EmployeeId = employeeId,
+                    Firstname = firstName,
+                    Lastname = lastName,
+                    Salary = salary,
+                    DepartmentId = departmentId,
+                    PermanentChar = PermanentChar
+                };
+                employeeVms = new RestSharpServiceConsumer<EmployeeViewModel>("api/employee/searchEmployees").Search(employeeVm);
+
+                // search form elements
+                ViewBag.DepartmentSelectListItems = new[] {
+                    new SelectListItem { Value = "1", Text = "Engineering" },
+                    new SelectListItem { Value = "2", Text = "Marketting" },
+                    new SelectListItem { Value = "3", Text = "Finance" },
+                    new SelectListItem { Value = "4", Text = "Business" }
+                };
+                ViewBag.PermenentSelectListItems = new[] {
+                    new SelectListItem { Value = "Y" , Text = "Yes"},
+                    new SelectListItem { Value = "N" , Text = "No"}
+                };
+
+                ViewBag.SearchResultOrAll = string.Format("Search results : ");
             }
             catch (Exception ex)
             {

@@ -145,5 +145,28 @@ namespace api.employeeManagement.Controllers
             }
             return isDeleted;
         }
+
+        // Update
+        [HttpPost]
+        [Route("api/employee/searchEmployees")]
+        public IList<EmployeeViewModel> Search(EmployeeViewModel viewModel)
+        {
+            IList<EmployeeViewModel> employeeVms = null;
+            try
+            {
+                IEnumerable<TBL_EMPLOYEE> employees = employeeRepository.GetAll();
+                employeeVms = new List<EmployeeViewModel>();
+                foreach (TBL_EMPLOYEE item in employees)
+                {
+                    employeeVms.Add(viewModelConvertor.GetEmployeeViewModel(item));
+                }
+            }
+            catch (Exception ex)
+            {
+                // logging
+                throw ex;
+            }
+            return employeeVms;
+        }
     }
 }

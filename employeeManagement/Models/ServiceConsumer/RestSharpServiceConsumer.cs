@@ -51,6 +51,34 @@ namespace employeeManagement.Models.ServiceConsumer
             }
         }
 
+        public IList<TEntity> Search(TEntity viewModel)
+        {
+            try
+            {
+                var request = new RestRequest(serviceUrl, Method.POST)
+                {
+                    RequestFormat = DataFormat.Json
+                };
+                request.AddParameter("viewModel", viewModel, ParameterType.UrlSegment);
+                request.AddBody(viewModel);
+                var response = restClient.Execute(request);
+                if (response.Content != null)
+                {
+                    IList<TEntity> entities = JsonConvert.DeserializeObject<IList<TEntity>>(response.Content);
+                    return entities;
+                }
+                else
+                {
+                    throw response.ErrorException;
+                }
+            }
+            catch (Exception ex)
+            {
+                // logging
+                throw ex;
+            }
+        }
+
         public TEntity GetById()
         {
             try
@@ -78,7 +106,7 @@ namespace employeeManagement.Models.ServiceConsumer
             }
         }
 
-        public bool Inert(EmployeeViewModel employeeVm)
+        public bool Inert(TEntity viewModel)
         {
             try
             {
@@ -86,8 +114,8 @@ namespace employeeManagement.Models.ServiceConsumer
                 {
                     RequestFormat = DataFormat.Json
                 };
-                request.AddParameter("viewModel", employeeVm, ParameterType.UrlSegment);
-                request.AddBody(employeeVm);
+                request.AddParameter("viewModel", viewModel, ParameterType.UrlSegment);
+                request.AddBody(viewModel);
                 var response = restClient.Execute(request);
                 if (response.Content != null)
                 {
@@ -106,7 +134,7 @@ namespace employeeManagement.Models.ServiceConsumer
             }
         }
 
-        public bool Update(EmployeeViewModel employeeVm)
+        public bool Update(TEntity viewModel)
         {
             try
             {
@@ -114,8 +142,8 @@ namespace employeeManagement.Models.ServiceConsumer
                 {
                     RequestFormat = DataFormat.Json
                 };
-                request.AddParameter("viewModel", employeeVm, ParameterType.UrlSegment);
-                request.AddBody(employeeVm);
+                request.AddParameter("viewModel", viewModel, ParameterType.UrlSegment);
+                request.AddBody(viewModel);
                 var response = restClient.Execute(request);
                 if (response.Content != null)
                 {

@@ -9,6 +9,50 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
+
+@* search form *@
+<div style="border:solid; border-color:burlywood; border-width:medium; padding:3%" class="form-horizontal">
+
+    <form method="post">
+        <fieldset>
+            <legend>Search employees</legend>
+            <div>
+                <label for="employeeId">Employee Id:</label>
+                <input type="number" name="employeeId" value="" />
+            </div>
+            <div>
+                <label for="firstName">First Name:</label>
+                <input type="text" name="firstName" value="" />
+            </div>
+            <div>
+                <label for="lastName">Last Name:</label>
+                <input type="text" name="lastName" value="" />
+            </div>
+            <div>
+                <label for="salary">Salary:</label>
+                <input type="number" name="salary" value="" />
+            </div>
+            <div>
+                <label for="department">Department:</label>
+                @Html.DropDownList("departmentId", new SelectList(ViewBag.DepartmentSelectListItems, "Value", "Text"))
+            </div>
+            <div>
+                <label for="department">Permenent:</label>
+                @Html.DropDownList("permanentChar", new SelectList(ViewBag.PermenentSelectListItems, "Value", "Text"))
+            </div>
+            <div>
+                <label>&nbsp;</label>
+                <input type="submit" value="Submit" class="submit" />
+            </div>
+        </fieldset>
+    </form>
+
+</div>
+<br />
+@* end search form *@
+
+<h2>@ViewBag.SearchResultOrAll</h2>
+
 <table class="table">
     <tr>
         <th>
