@@ -1,0 +1,143 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="EmployeeManagementModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="TBL_DEPARTMENT">
+          <Key>
+            <PropertyRef Name="DEPARTMENT_ID" />
+          </Key>
+          <Property Name="DEPARTMENT_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SHORTNAME" Type="varchar" MaxLength="5" />
+          <Property Name="NAME" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="TBL_EMPLOYEE">
+          <Key>
+            <PropertyRef Name="EMPLOYEE_ID" />
+          </Key>
+          <Property Name="EMPLOYEE_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FIRST_NAME" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="LASTNAME" Type="nvarchar" MaxLength="20" />
+          <Property Name="SALARY" Type="decimal" Precision="9" Scale="2" Nullable="false" />
+          <Property Name="DEPARTMENT_FID" Type="int" />
+          <Property Name="PERMANENT" Type="char" MaxLength="1" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__TBL_EMPLO__DEPAR__1367E606">
+          <End Role="TBL_DEPARTMENT" Type="Self.TBL_DEPARTMENT" Multiplicity="0..1" />
+          <End Role="TBL_EMPLOYEE" Type="Self.TBL_EMPLOYEE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_DEPARTMENT">
+              <PropertyRef Name="DEPARTMENT_ID" />
+            </Principal>
+            <Dependent Role="TBL_EMPLOYEE">
+              <PropertyRef Name="DEPARTMENT_FID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EmployeeManagementModelStoreContainer">
+          <EntitySet Name="TBL_DEPARTMENT" EntityType="Self.TBL_DEPARTMENT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBL_EMPLOYEE" EntityType="Self.TBL_EMPLOYEE" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__TBL_EMPLO__DEPAR__1367E606" Association="Self.FK__TBL_EMPLO__DEPAR__1367E606">
+            <End Role="TBL_DEPARTMENT" EntitySet="TBL_DEPARTMENT" />
+            <End Role="TBL_EMPLOYEE" EntitySet="TBL_EMPLOYEE" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="EmployeeManagementModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="TBL_DEPARTMENT">
+          <Key>
+            <PropertyRef Name="DEPARTMENT_ID" />
+          </Key>
+          <Property Name="DEPARTMENT_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SHORTNAME" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="TBL_EMPLOYEE" Relationship="Self.FK__TBL_EMPLO__DEPAR__1367E606" FromRole="TBL_DEPARTMENT" ToRole="TBL_EMPLOYEE" />
+        </EntityType>
+        <EntityType Name="TBL_EMPLOYEE">
+          <Key>
+            <PropertyRef Name="EMPLOYEE_ID" />
+          </Key>
+          <Property Name="EMPLOYEE_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FIRST_NAME" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LASTNAME" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="SALARY" Type="Decimal" Precision="9" Scale="2" Nullable="false" />
+          <Property Name="DEPARTMENT_FID" Type="Int32" />
+          <Property Name="PERMANENT" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="TBL_DEPARTMENT" Relationship="Self.FK__TBL_EMPLO__DEPAR__1367E606" FromRole="TBL_EMPLOYEE" ToRole="TBL_DEPARTMENT" />
+        </EntityType>
+        <Association Name="FK__TBL_EMPLO__DEPAR__1367E606">
+          <End Role="TBL_DEPARTMENT" Type="Self.TBL_DEPARTMENT" Multiplicity="0..1" />
+          <End Role="TBL_EMPLOYEE" Type="Self.TBL_EMPLOYEE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_DEPARTMENT">
+              <PropertyRef Name="DEPARTMENT_ID" />
+            </Principal>
+            <Dependent Role="TBL_EMPLOYEE">
+              <PropertyRef Name="DEPARTMENT_FID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EmployeeManagementEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="TBL_DEPARTMENT" EntityType="Self.TBL_DEPARTMENT" />
+          <EntitySet Name="TBL_EMPLOYEE" EntityType="Self.TBL_EMPLOYEE" />
+          <AssociationSet Name="FK__TBL_EMPLO__DEPAR__1367E606" Association="Self.FK__TBL_EMPLO__DEPAR__1367E606">
+            <End Role="TBL_DEPARTMENT" EntitySet="TBL_DEPARTMENT" />
+            <End Role="TBL_EMPLOYEE" EntitySet="TBL_EMPLOYEE" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="EmployeeManagementModelStoreContainer" CdmEntityContainer="EmployeeManagementEntities">
+          <EntitySetMapping Name="TBL_DEPARTMENT">
+            <EntityTypeMapping TypeName="EmployeeManagementModel.TBL_DEPARTMENT">
+              <MappingFragment StoreEntitySet="TBL_DEPARTMENT">
+                <ScalarProperty Name="DEPARTMENT_ID" ColumnName="DEPARTMENT_ID" />
+                <ScalarProperty Name="SHORTNAME" ColumnName="SHORTNAME" />
+                <ScalarProperty Name="NAME" ColumnName="NAME" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBL_EMPLOYEE">
+            <EntityTypeMapping TypeName="EmployeeManagementModel.TBL_EMPLOYEE">
+              <MappingFragment StoreEntitySet="TBL_EMPLOYEE">
+                <ScalarProperty Name="EMPLOYEE_ID" ColumnName="EMPLOYEE_ID" />
+                <ScalarProperty Name="FIRST_NAME" ColumnName="FIRST_NAME" />
+                <ScalarProperty Name="LASTNAME" ColumnName="LASTNAME" />
+                <ScalarProperty Name="SALARY" ColumnName="SALARY" />
+                <ScalarProperty Name="DEPARTMENT_FID" ColumnName="DEPARTMENT_FID" />
+                <ScalarProperty Name="PERMANENT" ColumnName="PERMANENT" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
