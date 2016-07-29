@@ -189,10 +189,6 @@ namespace employeeManagement.Models.ServiceConsumer
                 throw ex;
             }
         }
-
-        // Get by Id
-        // Insert
-        // Update
-        // Delete
+        
     }
 }

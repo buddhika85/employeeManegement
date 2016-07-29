@@ -10,8 +10,9 @@ namespace viewModels.employeeManagement
     public class EmployeeViewModel
     {
         public int EmployeeId { get; set; }
-        [Required]
+        [Required ]
         [Display(Name = "First name")]
+        [DataType(DataType.Text)]
         public string Firstname { get; set; }
         [Required]
         [Display(Name = "Last name")]
