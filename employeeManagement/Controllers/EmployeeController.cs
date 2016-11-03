@@ -18,20 +18,8 @@ namespace employeeManagement.Controllers
             try
             {
                 employeeVms = new RestSharpServiceConsumer<EmployeeViewModel>("api/employee/getAllEmployees").GetAll();
-
-                // search form elements
-                ViewBag.DepartmentSelectListItems = new[] {
-                    new SelectListItem { Value = "1", Text = "Engineering" },
-                    new SelectListItem { Value = "2", Text = "Marketting" },
-                    new SelectListItem { Value = "3", Text = "Finance" },
-                    new SelectListItem { Value = "4", Text = "Business" }
-                };
-                ViewBag.PermenentSelectListItems = new[] {
-                    new SelectListItem { Value = "Y" , Text = "Yes"},
-                    new SelectListItem { Value = "N" , Text = "No"}
-                };
-
-                ViewBag.SearchResultOrAll = string.Format("All the employees");
+                SetupSearhForm();
+                ViewBag.SearchResultOrAll("All the employees");
             }
             catch (Exception ex)
             {
@@ -40,6 +28,22 @@ namespace employeeManagement.Controllers
             }
 
             return View(employeeVms);
+        }
+
+        // helper method to setup search form
+        private void SetupSearhForm()
+        {
+            // search form elements
+            ViewBag.DepartmentSelectListItems = new[] {
+                    new SelectListItem { Value = "1", Text = "Engineering" },
+                    new SelectListItem { Value = "2", Text = "Marketting" },
+                    new SelectListItem { Value = "3", Text = "Finance" },
+                    new SelectListItem { Value = "4", Text = "Business" }
+                };
+            ViewBag.PermenentSelectListItems = new[] {
+                    new SelectListItem { Value = "Y" , Text = "Yes"},
+                    new SelectListItem { Value = "N" , Text = "No"}
+                };
         }
 
         [HttpPost]
@@ -58,20 +62,8 @@ namespace employeeManagement.Controllers
                     PermanentChar = PermanentChar
                 };
                 employeeVms = new RestSharpServiceConsumer<EmployeeViewModel>("api/employee/searchEmployees").Search(employeeVm);
-
-                // search form elements
-                ViewBag.DepartmentSelectListItems = new[] {
-                    new SelectListItem { Value = "1", Text = "Engineering" },
-                    new SelectListItem { Value = "2", Text = "Marketting" },
-                    new SelectListItem { Value = "3", Text = "Finance" },
-                    new SelectListItem { Value = "4", Text = "Business" }
-                };
-                ViewBag.PermenentSelectListItems = new[] {
-                    new SelectListItem { Value = "Y" , Text = "Yes"},
-                    new SelectListItem { Value = "N" , Text = "No"}
-                };
-
-                ViewBag.SearchResultOrAll = string.Format("Search results : ");
+                SetupSearhForm();
+                ViewBag.SearchResultOrAll = "Search results : ";
             }
             catch (Exception ex)
             {
@@ -105,16 +97,7 @@ namespace employeeManagement.Controllers
             try
             {
                 employeeVm = new EmployeeViewModel();
-                employeeVm.DepartmentSelectListItems = new[] {
-                    new SelectListItem { Value = "1", Text = "Engineering" },
-                    new SelectListItem { Value = "2", Text = "Marketting" },
-                    new SelectListItem { Value = "3", Text = "Finance" },
-                    new SelectListItem { Value = "4", Text = "Business" }
-                };
-                employeeVm.PermenentSelectListItems = new[] {
-                    new SelectListItem { Value = "Y" , Text = "Yes"},
-                    new SelectListItem { Value = "N" , Text = "No"}
-                };
+                SetupEmployeeVmWithUiControls(employeeVm);
             }
             catch (Exception ex)
             {
@@ -147,16 +130,7 @@ namespace employeeManagement.Controllers
             try
             {
                 employeeVm = new RestSharpServiceConsumer<EmployeeViewModel>(string.Format("api/employee/getEmployeeById?id={0}", id)).GetById();
-                employeeVm.DepartmentSelectListItems = new[] {
-                    new SelectListItem { Value = "1", Text = "Engineering" },
-                    new SelectListItem { Value = "2", Text = "Marketting" },
-                    new SelectListItem { Value = "3", Text = "Finance" },
-                    new SelectListItem { Value = "4", Text = "Business" }
-                };
-                employeeVm.PermenentSelectListItems = new[] {
-                    new SelectListItem { Value = "Y" , Text = "Yes"},
-                    new SelectListItem { Value = "N" , Text = "No"}
-                };
+                SetupEmployeeVmWithUiControls(employeeVm);
             }
             catch (Exception ex)
             {
@@ -164,6 +138,21 @@ namespace employeeManagement.Controllers
                 //throw;
             }
             return View(employeeVm);
+        }
+
+        // helper to add UI controls to the employee view model 
+        private static void SetupEmployeeVmWithUiControls(EmployeeViewModel employeeVm)
+        {
+            employeeVm.DepartmentSelectListItems = new[] {
+                    new SelectListItem { Value = "1", Text = "Engineering" },
+                    new SelectListItem { Value = "2", Text = "Marketting" },
+                    new SelectListItem { Value = "3", Text = "Finance" },
+                    new SelectListItem { Value = "4", Text = "Business" }
+                };
+            employeeVm.PermenentSelectListItems = new[] {
+                    new SelectListItem { Value = "Y" , Text = "Yes"},
+                    new SelectListItem { Value = "N" , Text = "No"}
+                };
         }
 
         // POST: Employee/Edit/5
