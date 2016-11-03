@@ -106,7 +106,7 @@ namespace employeeManagement.Models.ServiceConsumer
             }
         }
 
-        public bool Inert(TEntity viewModel)
+        public bool Insert(TEntity viewModel)
         {
             try
             {

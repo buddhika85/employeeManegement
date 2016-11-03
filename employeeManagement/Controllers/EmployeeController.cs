@@ -131,7 +131,7 @@ namespace employeeManagement.Controllers
             try
             {
                 // TODO: Add insert logic here                
-                bool isEmployeeCreated = new RestSharpServiceConsumer<EmployeeViewModel>("api/employee/putEmployee").Inert(employeeVm);
+                bool isEmployeeCreated = new RestSharpServiceConsumer<EmployeeViewModel>("api/employee/putEmployee").Insert(employeeVm);
                 return RedirectToAction("Index");
             }
             catch
